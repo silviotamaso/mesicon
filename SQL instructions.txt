@@ -1,0 +1,340 @@
+-- this is for the SQL View in PHPmySQLadmin.
+-- run each statement separately.
+
+-- required:
+CREATE TABLE `02_mesicon_users` (
+	`id` INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	`username` VARCHAR(8) NOT NULL,
+	`email` VARCHAR(99) NOT NULL,
+	`bio` VARCHAR(255) DEFAULT NULL,
+	`role` ENUM('Administrator','Manager','User') DEFAULT NULL,
+	`password` VARCHAR(225) NOT NULL,
+	`status` ENUM('Waiting','Authorized','Suspended') DEFAULT NULL,
+	`temp` VARCHAR(10) DEFAULT NULL,
+	`created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` TIMESTAMP NULL DEFAULT NULL,
+	`history` TEXT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--required:
+INSERT INTO `02_mesicon_users` (`id`, `username`, `email`, `role`, `created_at`, `bio`) VALUES
+(1, "<yourNick>", '<yourEmail>', 'Administrador', '1970-12-08 00:00:00' , '<yourBio>')
+
+-- optional, debug matters:
+INSERT INTO `02_mesicon_users` (`username`, `email`, `role`, `created_at`) VALUES
+("gagsg", 'b@b.com', "gerente", '0000-00-00 00:00:00')
+
+-- required:
+CREATE TABLE `02_mesicon_books`(
+	`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`link_id` INT(11) NOT NULL DEFAULT '0',
+	`title` VARCHAR(199) NOT NULL DEFAULT '0',
+	`author` VARCHAR(199) NOT NULL DEFAULT '0',
+	`org` TINYINT(1) NOT NULL DEFAULT '0',
+	`ed_number` TINYINT(2) NOT NULL DEFAULT '0',
+	`tomos` TINYINT(1) NOT NULL DEFAULT '0',
+	`series` VARCHAR(99) NOT NULL DEFAULT '0',
+	`num_series` TINYINT(2) NOT NULL DEFAULT '0',
+	`publisher` VARCHAR(99) NOT NULL DEFAULT '0',
+	`city` VARCHAR(99) NOT NULL DEFAULT '0',
+	`state` VARCHAR(2) NOT NULL DEFAULT '0',
+	`country` VARCHAR(25) NOT NULL DEFAULT '0',
+	`month` TINYINT(2) NOT NULL DEFAULT '0',
+	`year` SMALLINT(4) NOT NULL DEFAULT '0',
+	`idiom` VARCHAR(2) NOT NULL DEFAULT '0',
+	`more_idioms` VARCHAR(199) NOT NULL DEFAULT '0',
+	`pages` SMALLINT(4) NOT NULL DEFAULT '0',
+	`isbn` BIGINT(13) NOT NULL DEFAULT '0',
+	`width` TINYINT(2) NOT NULL DEFAULT '0',
+	`height` TINYINT(2) NOT NULL DEFAULT '0',
+	`front_illustrator` VARCHAR(99) NOT NULL DEFAULT '0',
+	`inside_illustrator` VARCHAR(99) NOT NULL DEFAULT '0',
+	`translator` VARCHAR(99) NOT NULL DEFAULT '0',
+	`preface` VARCHAR(199) NOT NULL DEFAULT '0',
+	`paperback` TINYINT(1) NOT NULL DEFAULT '0',
+	`digital` TINYINT(1) NOT NULL DEFAULT '0',
+	`exlibris` TINYINT(1) NOT NULL DEFAULT '0',
+	`manuscript` TINYINT(1) NOT NULL DEFAULT '0',
+	`printed_dedication` TEXT NULL,
+	`first_ear` TEXT NULL,
+	`second_ear` TEXT NULL,
+	`back` TEXT NULL,
+	`add_info` TEXT NULL,
+	`comments` TEXT NULL,
+	`creator` VARCHAR(8) NOT NULL DEFAULT '0',
+	`creator_id` INT(11) NOT NULL DEFAULT '0',
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`updated_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`pageviews` MEDIUMINT(9) NOT NULL DEFAULT '0',
+	`published` TINYINT(1) NOT NULL DEFAULT '0',
+	FOREIGN KEY(`creator_id`) REFERENCES `02_mesicon_users`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+
+-- required (must be exactly the same structure define above, with the "_temp" at the name):
+CREATE TABLE `02_mesicon_books_temp`(
+	`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`link_id` INT(11) NOT NULL DEFAULT '0',
+	`title` VARCHAR(199) NOT NULL DEFAULT '0',
+	`author` VARCHAR(199) NOT NULL DEFAULT '0',
+	`org` TINYINT(1) NOT NULL DEFAULT '0',
+	`ed_number` TINYINT(2) NOT NULL DEFAULT '0',
+	`tomos` TINYINT(1) NOT NULL DEFAULT '0',
+	`series` VARCHAR(99) NOT NULL DEFAULT '0',
+	`num_series` TINYINT(2) NOT NULL DEFAULT '0',
+	`publisher` VARCHAR(99) NOT NULL DEFAULT '0',
+	`city` VARCHAR(99) NOT NULL DEFAULT '0',
+	`state` VARCHAR(2) NOT NULL DEFAULT '0',
+	`country` VARCHAR(25) NOT NULL DEFAULT '0',
+	`month` TINYINT(2) NOT NULL DEFAULT '0',
+	`year` SMALLINT(4) NOT NULL DEFAULT '0',
+	`idiom` VARCHAR(2) NOT NULL DEFAULT '0',
+	`more_idioms` VARCHAR(199) NOT NULL DEFAULT '0',
+	`pages` SMALLINT(4) NOT NULL DEFAULT '0',
+	`isbn` BIGINT(13) NOT NULL DEFAULT '0',
+	`width` TINYINT(2) NOT NULL DEFAULT '0',
+	`height` TINYINT(2) NOT NULL DEFAULT '0',
+	`front_illustrator` VARCHAR(99) NOT NULL DEFAULT '0',
+	`inside_illustrator` VARCHAR(99) NOT NULL DEFAULT '0',
+	`translator` VARCHAR(99) NOT NULL DEFAULT '0',
+	`preface` VARCHAR(199) NOT NULL DEFAULT '0',
+	`paperback` TINYINT(1) NOT NULL DEFAULT '0',
+	`digital` TINYINT(1) NOT NULL DEFAULT '0',
+	`exlibris` TINYINT(1) NOT NULL DEFAULT '0',
+	`manuscript` TINYINT(1) NOT NULL DEFAULT '0',
+	`printed_dedication` TEXT NULL,
+	`first_ear` TEXT NULL,
+	`second_ear` TEXT NULL,
+	`back` TEXT NULL,
+	`add_info` TEXT NULL,
+	`comments` TEXT NULL,
+	`creator` VARCHAR(8) NOT NULL DEFAULT '0',
+	`creator_id` INT(11) NOT NULL DEFAULT '0',
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`updated_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`pageviews` MEDIUMINT(9) NOT NULL DEFAULT '0',
+	`published` TINYINT(1) NOT NULL DEFAULT '0',
+	FOREIGN KEY(`creator_id`) REFERENCES `02_mesicon_users`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+
+-- required:
+CREATE TABLE `02_mesicon_manuscripts`(
+	`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`link_id` INT(11) NOT NULL DEFAULT '0',
+	`link_title` VARCHAR(199) NOT NULL DEFAULT '0',
+	`author` VARCHAR(199) NOT NULL DEFAULT '0',
+	`author_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`original` TINYINT(1) NOT NULL DEFAULT '0',
+	`copy` VARCHAR(99) NOT NULL DEFAULT '0',
+	`title` VARCHAR(99) NOT NULL DEFAULT '0',
+	`title_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`signature` VARCHAR(49) NOT NULL DEFAULT '0',
+	`source_local` VARCHAR(49) NOT NULL DEFAULT '0',
+	`source_local_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`recipient` VARCHAR(199) NOT NULL DEFAULT '0',
+	`recipient_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`destination` VARCHAR(49) NOT NULL DEFAULT '0',
+	`destination_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`treatment` VARCHAR(49) NOT NULL DEFAULT '0',
+	`postscript` VARCHAR(199) NOT NULL DEFAULT '0',
+	`data` DATE NOT NULL DEFAULT '0000-00-00',
+	`data_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`idiom` VARCHAR(2) NOT NULL DEFAULT '0',
+	`gender` TINYINT(2) NOT NULL DEFAULT '0',
+	`species` SMALLINT(3) NOT NULL DEFAULT '0',
+	`type` VARCHAR(49) NOT NULL DEFAULT '0',
+	`items` TINYINT(2) NOT NULL DEFAULT '0',
+	`description` VARCHAR(255) NOT NULL DEFAULT '0',
+	`contents` TEXT NULL,
+	`autograph` TINYINT(1) NOT NULL DEFAULT '0',
+	`autograph_color` VARCHAR(19) NOT NULL DEFAULT '0',
+	`typewritten` TINYINT(1) NOT NULL DEFAULT '0',
+	`typewritten_color` VARCHAR(19) NOT NULL DEFAULT '0',
+	`medium` ENUM('Acetato - Acetate','Aço - Steel','Algodão - Cotton','Alumínio - Aluminum','Bronze - Bronze','Cera - Wax','Cerâmica - Ceramic','Cobre - Copper','Couro - Leather','Ferro - Iron','Gesso - Plaster','Latão - Brass','Linho - Linen','Louça - Dishware','Madeira - Wood','Mármore - Marble','Metal - Metal','Nitrato - Nitrate','Ouro - Gold','Papel - Paper','Pedra - Stone','Pergaminho - Parchment','Plástico - Plastic','Poliéster - Polyester','Prata - Silver','Seda - Silk','Vidro - Glass','Vinil - Vinyl') DEFAULT NULL,	`watermark` VARCHAR(199) NOT NULL DEFAULT '0',
+	`pages` SMALLINT(4) NOT NULL DEFAULT '0',
+	`leafs` SMALLINT(4) NOT NULL DEFAULT '0',
+	`width` SMALLINT(3) NOT NULL DEFAULT '0',
+	`height` SMALLINT(3) NOT NULL DEFAULT '0',
+	`anex` VARCHAR(199) NOT NULL DEFAULT '0',
+	`envelope` VARCHAR(199) NOT NULL DEFAULT '0',
+	`stamp` VARCHAR(199) NOT NULL DEFAULT '0',
+	`imprint` VARCHAR(199) NOT NULL DEFAULT '0',
+	`post` DATE NOT NULL DEFAULT '0000-00-00',
+	`post_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`receipt` DATE NOT NULL DEFAULT '0000-00-00',
+	`receipt_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`carrier` VARCHAR(199) NOT NULL DEFAULT '0',
+	`in_hands` TINYINT(1) NOT NULL DEFAULT '0',
+	`notes_recipient` VARCHAR(199) NOT NULL DEFAULT '0',
+	`notes_third` VARCHAR(199) NOT NULL DEFAULT '0',
+	`conservation` TINYINT(1) NOT NULL DEFAULT '0',
+	`address` VARCHAR(99) NOT NULL DEFAULT '0',
+	`collection` VARCHAR(99) NOT NULL DEFAULT '0',
+	`ref` VARCHAR(99) NOT NULL DEFAULT '0',
+	`onomastic` VARCHAR(255) NOT NULL DEFAULT '0',
+	`pseudonyms` VARCHAR(255) NOT NULL DEFAULT '0',
+	`mentioned_works` VARCHAR(255) NOT NULL DEFAULT '0',
+	`periodics` VARCHAR(255) NOT NULL DEFAULT '0',
+	`historic` VARCHAR(255) NOT NULL DEFAULT '0',
+	`acquisition` ENUM('Comodato - Lending','Compra - Purchase','Custódia - Custody','Depósito - Deposit','Doação - Donation','Empréstimo - Loan','Legado - Legacy','Permuta - Exchange','Recolhimento - Retreat','Reintegração - Reintegration','Transferência - Transfer') DEFAULT NULL,
+	`acq_date` DATE NOT NULL DEFAULT '0000-00-00',
+	`add_info` TEXT NULL,
+	`comments` TEXT NULL,
+	`creator` VARCHAR(8) NOT NULL DEFAULT '0',
+	`creator_id` INT(11) NOT NULL DEFAULT '0',
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`updated_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`pageviews` MEDIUMINT(9) NOT NULL DEFAULT '0',
+	`published` TINYINT(1) NOT NULL DEFAULT '0',
+	FOREIGN KEY(`creator_id`) REFERENCES `02_mesicon_users`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+
+-- required (must be exactly the same structure define above, with the "_temp" at the name):
+CREATE TABLE `02_mesicon_manuscripts_temp`(
+	`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`link_id` INT(11) NOT NULL DEFAULT '0',
+	`link_title` VARCHAR(199) NOT NULL DEFAULT '0',
+	`author` VARCHAR(199) NOT NULL DEFAULT '0',
+	`author_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`original` TINYINT(1) NOT NULL DEFAULT '0',
+	`copy` VARCHAR(99) NOT NULL DEFAULT '0',
+	`title` VARCHAR(99) NOT NULL DEFAULT '0',
+	`title_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`signature` VARCHAR(49) NOT NULL DEFAULT '0',
+	`source_local` VARCHAR(49) NOT NULL DEFAULT '0',
+	`source_local_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`recipient` VARCHAR(199) NOT NULL DEFAULT '0',
+	`recipient_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`destination` VARCHAR(49) NOT NULL DEFAULT '0',
+	`destination_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`treatment` VARCHAR(49) NOT NULL DEFAULT '0',
+	`postscript` VARCHAR(199) NOT NULL DEFAULT '0',
+	`data` DATE NOT NULL DEFAULT '0000-00-00',
+	`data_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`idiom` VARCHAR(2) NOT NULL DEFAULT '0',
+	`gender` TINYINT(2) NOT NULL DEFAULT '0',
+	`species` SMALLINT(3) NOT NULL DEFAULT '0',
+	`type` VARCHAR(49) NOT NULL DEFAULT '0',
+	`items` TINYINT(2) NOT NULL DEFAULT '0',
+	`description` VARCHAR(255) NOT NULL DEFAULT '0',
+	`contents` TEXT NULL,
+	`autograph` TINYINT(1) NOT NULL DEFAULT '0',
+	`autograph_color` VARCHAR(19) NOT NULL DEFAULT '0',
+	`typewritten` TINYINT(1) NOT NULL DEFAULT '0',
+	`typewritten_color` VARCHAR(19) NOT NULL DEFAULT '0',
+	`medium` ENUM('Acetato - Acetate','Aço - Steel','Algodão - Cotton','Alumínio - Aluminum','Bronze - Bronze','Cera - Wax','Cerâmica - Ceramic','Cobre - Copper','Couro - Leather','Ferro - Iron','Gesso - Plaster','Latão - Brass','Linho - Linen','Louça - Dishware','Madeira - Wood','Mármore - Marble','Metal - Metal','Nitrato - Nitrate','Ouro - Gold','Papel - Paper','Pedra - Stone','Pergaminho - Parchment','Plástico - Plastic','Poliéster - Polyester','Prata - Silver','Seda - Silk','Vidro - Glass','Vinil - Vinyl') DEFAULT NULL,	`watermark` VARCHAR(199) NOT NULL DEFAULT '0',
+	`pages` SMALLINT(4) NOT NULL DEFAULT '0',
+	`leafs` SMALLINT(4) NOT NULL DEFAULT '0',
+	`width` SMALLINT(3) NOT NULL DEFAULT '0',
+	`height` SMALLINT(3) NOT NULL DEFAULT '0',
+	`anex` VARCHAR(199) NOT NULL DEFAULT '0',
+	`envelope` VARCHAR(199) NOT NULL DEFAULT '0',
+	`stamp` VARCHAR(199) NOT NULL DEFAULT '0',
+	`imprint` VARCHAR(199) NOT NULL DEFAULT '0',
+	`post` DATE NOT NULL DEFAULT '0000-00-00',
+	`post_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`receipt` DATE NOT NULL DEFAULT '0000-00-00',
+	`receipt_type` TINYINT(1) NOT NULL DEFAULT '0',
+	`carrier` VARCHAR(199) NOT NULL DEFAULT '0',
+	`in_hands` TINYINT(1) NOT NULL DEFAULT '0',
+	`notes_recipient` VARCHAR(199) NOT NULL DEFAULT '0',
+	`notes_third` VARCHAR(199) NOT NULL DEFAULT '0',
+	`conservation` TINYINT(1) NOT NULL DEFAULT '0',
+	`address` VARCHAR(99) NOT NULL DEFAULT '0',
+	`collection` VARCHAR(99) NOT NULL DEFAULT '0',
+	`ref` VARCHAR(99) NOT NULL DEFAULT '0',
+	`onomastic` VARCHAR(255) NOT NULL DEFAULT '0',
+	`pseudonyms` VARCHAR(255) NOT NULL DEFAULT '0',
+	`mentioned_works` VARCHAR(255) NOT NULL DEFAULT '0',
+	`periodics` VARCHAR(255) NOT NULL DEFAULT '0',
+	`historic` VARCHAR(255) NOT NULL DEFAULT '0',
+	`acquisition` ENUM('Comodato - Lending','Compra - Purchase','Custódia - Custody','Depósito - Deposit','Doação - Donation','Empréstimo - Loan','Legado - Legacy','Permuta - Exchange','Recolhimento - Retreat','Reintegração - Reintegration','Transferência - Transfer') DEFAULT NULL,
+	`acq_date` DATE NOT NULL DEFAULT '0000-00-00',
+	`add_info` TEXT NULL,
+	`comments` TEXT NULL,
+	`creator` VARCHAR(8) NOT NULL DEFAULT '0',
+	`creator_id` INT(11) NOT NULL DEFAULT '0',
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`updated_at` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`pageviews` MEDIUMINT(9) NOT NULL DEFAULT '0',
+	`published` TINYINT(1) NOT NULL DEFAULT '0',
+	FOREIGN KEY(`creator_id`) REFERENCES `02_mesicon_users`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+
+-- required:
+CREATE TABLE `02_mesicon_passemailchange` (
+	`id` INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	`iduser` INT(11) NOT NULL,
+	`username` VARCHAR(8) NOT NULL,
+	`email_from` VARCHAR(99) NOT NULL,
+	`email_to` VARCHAR(99) NOT NULL,
+	`pass_from` VARCHAR(225) NOT NULL,
+	`pass_to` VARCHAR(225) NOT NULL,
+	`temp` VARCHAR(225) NOT NULL,
+	`created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- required:
+CREATE TABLE `02_mesicon_comments` (
+	`id` INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	`username_commenter` VARCHAR(8) NOT NULL,
+	`id_commenter` INT(11) NOT NULL,
+	`creator_id` INT(11) NOT NULL,
+	`id_post` INT(11) NOT NULL,
+	`tabela` TINYINT(1) NOT NULL,
+	`status` TINYINT(1) NOT NULL,
+	`txt` VARCHAR(255) NOT NULL DEFAULT '0',
+	`created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- required (must be exactly the same structure define above, with the "_temp" at the name):
+CREATE TABLE `02_mesicon_comments_temp` (
+	`id` INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	`username_commenter` VARCHAR(8) NOT NULL,
+	`id_commenter` INT(11) NOT NULL,
+	`creator_id` INT(11) NOT NULL,
+	`id_post` INT(11) NOT NULL,
+	`tabela` TINYINT(1) NOT NULL,
+	`status` TINYINT(1) NOT NULL,
+	`txt` VARCHAR(255) NOT NULL DEFAULT '0',
+	`created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- optional, debut matters:
+INSERT INTO `02_mesicon_comments` 
+(`username_commenter`, `id_commenter`, `creator_id`, `id_post`, `tabela`, `status`, `txt`, `created_at`) 
+VALUES
+("wspktk", '27', "48", "45", "1", "1", "comment test 1", '2022-05-22 01:26:28')
+
+-- required:
+CREATE TABLE `02_mesicon_latest`(
+	`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`tabela` TINYINT(1) NOT NULL DEFAULT '0',
+	`original_id` INT(11) NOT NULL DEFAULT '0',
+	`title` VARCHAR(199) NOT NULL DEFAULT '0',
+	`author` VARCHAR(199) NOT NULL DEFAULT '0',
+	`ed_number` TINYINT(2) NOT NULL DEFAULT '0',
+	`manuscript` TINYINT(1) NOT NULL DEFAULT '0',
+	`creator` VARCHAR(8) NOT NULL DEFAULT '0',
+	`created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+
+-- optional, debug matters:
+INSERT INTO `02_mesicon_latest` 
+(`tabela`,`original_id`,`title`,`author`,`ed_number`,`manuscript`,`creator`,`created_at`) 
+VALUES
+("1","1","The Republic","Plato","1","1","<yourNick>","2022-07-05 01:02:03")
+
+-- additional info about values inside DB
+--
+--	field "published" (tables "manuscripts", "books" and respectively "temp" both cases): 
+--		0: default or suspended (db books/manuscript)
+--		1: published (db books/manuscripts)
+--		2: in revision by the creator (db temp)
+--		3: waiting admin approval (db temp)
+--		4: in revision by the creator (db temp and db book/manuscript)
+
+--	field "status" (table "comments")
+--		1: waiting the revision by the post owner
+--		2: approved by post owner, waiting revision by ADM
+--		3: approved, published
+
