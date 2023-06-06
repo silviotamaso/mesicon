@@ -7,11 +7,12 @@ Created in the scope of the Regional Multidisciplinary Studies - REGIONEM (https
 
 https://github.com/silviotamaso/mesicon
 
-version 0.2 (June, 2023)
-version 0.1 (March, 2023)
-
 author Silvio Cesar Tamaso D'Onofrio (opeltrezero a.t gmail)
 
 copyright Silvio Cesar Tamaso D'Onofrio 2022, 2023
 
 licence GPLv3
+
+version 0.2 (June, 2023)
+
+version 0.1 (March, 2023)
