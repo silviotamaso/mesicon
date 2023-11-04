@@ -13,6 +13,8 @@ copyright Silvio Cesar Tamaso D'Onofrio 2022, 2023
 
 licence GPLv3
 
-version 0.2 (June, 2023)
+version 0.3 (Nov. 2023) - implemented personal url's for the users; text on the column 4 - home page, now is displayed as a carousel; 
 
-version 0.1 (March, 2023)
+version 0.2 (Jun. 2023) - new forms of search in advanced search; corrected some bugs.
+
+version 0.1 (Mar. 2023)
